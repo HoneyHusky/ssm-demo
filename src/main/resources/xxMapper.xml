@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mr.dog.mapper.DogMapper">
+	
+	<sql id="dogCol">
+		dog_id,dog_name,dog_age,dog_type,dog_color,dog_bir
+	</sql>
+	<sql id="dogAddCol">
+		dog_name,dog_age,dog_type,dog_color,dog_bir
+	</sql>
+	
+	<select id="queryList" parameterType="page" resultType="dog">
+		select <include refid="dogCol"></include> from t_dog
+		limit #{start},#{rows}
+	</select>
+	
+	<select id="queryCount" resultType="int">
+		select count(*) from t_dog
+	</select>
+	
+	<select id="getDogById" parameterType="int" resultType="dog">
+		select <include refid="dogCol"></include> from t_dog where dog_id=#{dogId}
+	</select>
+	
+	<insert id="add" parameterType="dog">
+		insert into t_dog(<include refid="dogAddCol"></include>) values(#{dogName},#{dogAge},#{dogType},#{dogColor},#{dogBir})
+	</insert>
+	
+	<update id="update" parameterType="dog">
+		update t_dog set dog_name=#{dogName},dog_age=#{dogAge},dog_type=#{dogType},dog_color=#{dogColor},dog_bir=#{dogBir} where dog_id = #{dogId}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from t_dog where dog_id = #{dogId}
+	</delete>	
+</mapper>
